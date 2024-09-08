@@ -1,6 +1,6 @@
 body,
 html {
-    background-color: #f0f0f0;
+    background-color: #8f8e8e;
 }
 
 .container {
@@ -33,11 +33,16 @@ html {
 .d-count {
     padding-left: 5px;
     padding-right: 5px;
+    width: 52px;
+    height: 38px;
 }
 
 .n-count {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 52px;
+    height: 38px;
+
 }
 
 .count-row {
