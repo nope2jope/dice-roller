@@ -1,6 +1,16 @@
 body,
 html {
+    width: 400px;
+    max-width: 400px;
+    height: 600px;
+    max-height: 600px;
     background-color: #8f8e8e;
+}
+
+.test {
+    color: white;
+    font-weight: bold;
+    padding-left: 30px;
 }
 
 .container {
@@ -37,6 +47,13 @@ html {
     height: 38px;
 }
 
+.d-counted {
+    display: flex;
+    flex-direction: row;
+    padding-left: 20px;
+    padding-top: 30px
+}
+
 .n-count {
     padding-left: 5px;
     padding-right: 5px;
@@ -58,41 +75,74 @@ html {
 .display-row {
     margin-top: 15px;
     margin-bottom: 25px;
-} 
+}
 
-.button-row{
+.button-row {
     margin-bottom: 20px;
 }
 
-.options-row{
-
-}
+.options-row {}
 
 #left-arrow {
     margin-right: 40px;
+    cursor: pointer;
+
+    cursor: pointer;
 }
 
 #right-arrow {
     margin-left: 40px;
+    cursor: pointer;
+
 }
 
 #minus-button {
     margin-right: 20px;
+    cursor: pointer;
+
 }
 
 #plus-button {
     margin-left: 20px;
+    cursor: pointer;
+
 }
 
 #roll-button {
+    cursor: pointer;
+
 }
 
 #q-button {
     margin-left: 10px;
     margin-bottom: 10px;
+    cursor: pointer;
+
 }
 
 #x-button {
     margin-right: 10px;
     margin-bottom: 10px;
+    cursor: pointer;
+
 }
+
+#input-screen {
+
+}
+
+#result-screen {
+    display: none;
+}
+
+@keyframes shake {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(0, 2px); }
+    50% { transform: translate(0,0); }
+    100% { transform: translate(0, 0); }
+  }
+  
+  .shake {
+    animation: shake 0.5s ease-in-out;
+    animation-iteration-count: 1; 
+  }

@@ -41,6 +41,7 @@ function resetTemplates() {
   for (z in diceSums) {
     diceSums[z] = 0;
   }
+
   $("#d4-counter").attr("src", `/assets/num0.png`);
   $("#d6-counter").attr("src", `/assets/num0.png`);
   $("#d8-counter").attr("src", `/assets/num0.png`);
@@ -75,6 +76,17 @@ function rollDice(dice_val, num) {
   return arr;
 }
 
+function generateDivs(r, x) {
+  console.log(r)
+  console.log(x)
+  for (var i = 0; i < x.length; i++) {
+    const d = document.createElement('div');
+    $(r).append(d);
+    d.html("OK")
+
+  }
+}
+
 window.addEventListener("DOMContentLoaded", () => {
 
   const btnLeftArrow = $("#left-arrow");
@@ -82,6 +94,8 @@ window.addEventListener("DOMContentLoaded", () => {
   const btnMinus = $("#minus-button");
   const btnPlus = $("#plus-button");
   const btnRoll = $("#roll-button");
+  const btnX = $("#x-button")
+  const btnRefresh = $("#refresh-button")
 
   btnRoll.on("click", () => {
     for (key in diceCount) {
@@ -89,24 +103,46 @@ window.addEventListener("DOMContentLoaded", () => {
         diceRolls[key] = rollDice(parseInt(key), parseInt(diceCount[key]))
       }
     };
-    console.log(diceRolls);
-  resetTemplates()  });
+    $("#input-screen").hide();
+    $("#result-screen").show();
+    $("#d4-counted").html(diceRolls[4].toString());
+    $("#d6-counted").html(diceRolls[6].toString());
+    $("#d8-counted").html(diceRolls[8].toString());
+    $("#d10-counted").html(diceRolls[10].toString());
+    $("#d12-counted").html(diceRolls[12].toString());
+    setTimeout( () => {
+      generateDivs(`#d20-counted`, diceRolls[20]);
+    }, 1000)
+
+
+
+  });
 
   btnMinus.on("click", () => {
-    console.log(diceCount[diceQueue[currentSelection]])
+    $("#minus-button").addClass("shake");
     if (diceCount[diceQueue[currentSelection]] > 0) {
+      $(`#d${diceQueue[currentSelection]}-counter`).addClass("shake")
       diceCount[diceQueue[currentSelection]]--;
       $(`#d${diceQueue[currentSelection]}-counter`).attr("src", `/assets/num${diceCount[diceQueue[currentSelection]]}.png`);
-    }
+    };
+    setTimeout( () => {
+      $("#minus-button").removeClass("shake");
+      $(`#d${diceQueue[currentSelection]}-counter`).removeClass("shake");
+    }, 100)
   });
 
   btnPlus.on("click", () => {
-    console.log(diceCount[diceQueue[currentSelection]])
+    $("#plus-button").addClass("shake");
     if (diceCount[diceQueue[currentSelection]] < 9) {
+      $(`#d${diceQueue[currentSelection]}-counter`).addClass("shake")
       diceCount[diceQueue[currentSelection]]++;
       $(`#d${diceQueue[currentSelection]}-counter`).attr("src", `/assets/num${diceCount[diceQueue[currentSelection]]}.png`);
     };
-  })
+    setTimeout( () => {
+      $("#plus-button").removeClass("shake");
+      $(`#d${diceQueue[currentSelection]}-counter`).removeClass("shake");
+    }, 100)
+  });
 
   btnLeftArrow.on("click", () => {
     scrollLeft();
@@ -119,5 +155,15 @@ window.addEventListener("DOMContentLoaded", () => {
     $("#dice-name").attr("src", `/assets/name${diceQueue[currentSelection]}.png`)
     $("#dice-choice").attr("src", `/assets/d${diceQueue[currentSelection]}sprite.png`);
   });
+
+  btnX.on("click", () => {
+    resetTemplates();
+  });
+
+  btnRefresh.on("click", () => {
+    resetTemplates();
+    $("#result-screen").hide();
+    $("#input-screen").show();
+  })
 });
 
