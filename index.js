@@ -77,14 +77,9 @@ function rollDice(dice_val, num) {
 }
 
 function generateDivs(r, x) {
-  console.log(r)
-  console.log(x)
-  for (var i = 0; i < x.length; i++) {
-    const d = document.createElement('div');
-    $(r).append(d);
-    d.html("OK")
-
-  }
+  const d = $("<div></div>").text(x);
+  $(r).append(d);
+  d.addClass("shake");
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -105,18 +100,17 @@ window.addEventListener("DOMContentLoaded", () => {
     };
     $("#input-screen").hide();
     $("#result-screen").show();
-    $("#d4-counted").html(diceRolls[4].toString());
-    $("#d6-counted").html(diceRolls[6].toString());
-    $("#d8-counted").html(diceRolls[8].toString());
-    $("#d10-counted").html(diceRolls[10].toString());
-    $("#d12-counted").html(diceRolls[12].toString());
-    setTimeout( () => {
-      generateDivs(`#d20-counted`, diceRolls[20]);
-    }, 1000)
 
-
-
-  });
+    for (let key in diceRolls) {
+      $(`#d${key}-counted`).empty();
+      let a = diceRolls[key];
+      diceRolls[key].forEach((a, i) => {
+        setTimeout(() => {
+        generateDivs(`#d${key}-counted`, a);
+      }, i * 1000)
+    })
+    }
+ });
 
   btnMinus.on("click", () => {
     $("#minus-button").addClass("shake");
@@ -125,7 +119,7 @@ window.addEventListener("DOMContentLoaded", () => {
       diceCount[diceQueue[currentSelection]]--;
       $(`#d${diceQueue[currentSelection]}-counter`).attr("src", `/assets/num${diceCount[diceQueue[currentSelection]]}.png`);
     };
-    setTimeout( () => {
+    setTimeout(() => {
       $("#minus-button").removeClass("shake");
       $(`#d${diceQueue[currentSelection]}-counter`).removeClass("shake");
     }, 100)
@@ -138,7 +132,7 @@ window.addEventListener("DOMContentLoaded", () => {
       diceCount[diceQueue[currentSelection]]++;
       $(`#d${diceQueue[currentSelection]}-counter`).attr("src", `/assets/num${diceCount[diceQueue[currentSelection]]}.png`);
     };
-    setTimeout( () => {
+    setTimeout(() => {
       $("#plus-button").removeClass("shake");
       $(`#d${diceQueue[currentSelection]}-counter`).removeClass("shake");
     }, 100)
