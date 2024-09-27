@@ -79,18 +79,20 @@ function rollDice(dice_val, num) {
 function generateDivs(r, x) {
   const d = $("<div></div>").text(x);
   $(r).append(d);
+  d.addClass("counted");
   d.addClass("shake");
+
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
 
   const btnLeftArrow = $("#left-arrow");
   const btnRightArrow = $("#right-arrow");
   const btnMinus = $("#minus-button");
   const btnPlus = $("#plus-button");
   const btnRoll = $("#roll-button");
-  const btnX = $("#x-button")
-  const btnRefresh = $("#refresh-button")
+  const btnX = $("#x-button");
+  const btnRefresh = $("#refresh-button");
 
   btnRoll.on("click", () => {
     for (key in diceCount) {
@@ -101,16 +103,20 @@ window.addEventListener("DOMContentLoaded", () => {
     $("#input-screen").hide();
     $("#result-screen").show();
 
-    for (let key in diceRolls) {
+    const keys = Object.keys(diceRolls);
+
+    let delay = 0;
+
+    keys.forEach(key => {
       $(`#d${key}-counted`).empty();
-      let a = diceRolls[key];
-      diceRolls[key].forEach((a, i) => {
+      diceRolls[key].forEach(value => {
         setTimeout(() => {
-        generateDivs(`#d${key}-counted`, a);
-      }, i * 1000)
-    })
-    }
- });
+          generateDivs(`#d${key}-counted`, value);
+        }, delay);
+        delay += 750;
+      });
+    });
+  });
 
   btnMinus.on("click", () => {
     $("#minus-button").addClass("shake");
@@ -159,5 +165,5 @@ window.addEventListener("DOMContentLoaded", () => {
     $("#result-screen").hide();
     $("#input-screen").show();
   })
-});
 
+});
