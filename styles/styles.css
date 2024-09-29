@@ -7,10 +7,20 @@ html {
     background-color: #8f8e8e;
 }
 
-.test {
+.d-single {
+    color: white;
+    font-weight: bold;
+    padding-left: 38px;
+    display: flex;
+    align-items: center;
+}
+
+.d-double {
     color: white;
     font-weight: bold;
     padding-left: 30px;
+    display: flex;
+    align-items: center;
 }
 
 .container {
@@ -40,6 +50,11 @@ html {
     justify-content: space-between;
 }
 
+.counted {
+    display: inline-block;
+    margin-right: 10px;
+}
+
 .d-count {
     padding-left: 5px;
     padding-right: 5px;
@@ -50,7 +65,7 @@ html {
 .d-counted {
     display: flex;
     flex-direction: row;
-    padding-left: 20px;
+    padding-left: 30px;
     padding-top: 30px
 }
 
@@ -133,6 +148,11 @@ html {
 
 #result-screen {
     display: none;
+}
+
+@font-face {
+    font-family: DiceText;
+    src: url("/assets/DRoll.ttf")
 }
 
 @keyframes shake {

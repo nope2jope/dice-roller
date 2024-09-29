@@ -1,6 +1,4 @@
-var diceQueue = [4, 6, 8, 10, 12, 20];
-var toRoll = 0;
-var currentSelection = 5;
+const diceQueue = [4, 6, 8, 10, 12, 20];
 
 const diceCount = {
   4: 0,
@@ -29,7 +27,13 @@ const diceSums = {
   20: 0,
 }
 
+var toRoll = 0;
+
+var currentSelection = 5;
+
 function resetTemplates() {
+  toRoll = 0;
+
   for (x in diceCount) {
     diceCount[x] = 0;
   }
@@ -77,7 +81,7 @@ function rollDice(dice_val, num) {
 }
 
 function generateDivs(r, x) {
-  const d = $("<div></div>").text(x);
+  const d = $(`<div><img src="/assets/val${x}.png" alt=""></div>`);
   $(r).append(d);
   d.addClass("counted");
   d.addClass("shake");
@@ -95,62 +99,94 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnRefresh = $("#refresh-button");
 
   btnRoll.on("click", () => {
-    for (key in diceCount) {
-      if (diceCount[key] > 0) {
-        diceRolls[key] = rollDice(parseInt(key), parseInt(diceCount[key]))
-      }
-    };
-    $("#input-screen").hide();
-    $("#result-screen").show();
+    // checks to see if no dice present to roll
+    if (toRoll > 0) {
+      if (toRoll === 1) {
+        // play audio
+        var audio = new Audio('/assets/sounds/single-roll.mp3');
+        audio.play();
+      } else {
+        // play audio
+        var audio = new Audio('/assets/sounds/multi-roll.wav');
+        audio.play()
+      };
 
-    const keys = Object.keys(diceRolls);
+      for (let key in diceCount) {
+        if (diceCount[key] > 0) {
+          diceRolls[key] = rollDice(parseInt(key), parseInt(diceCount[key]))
+        }
+      };
+      $("#input-screen").hide();
+      $("#result-screen").show();
 
-    let delay = 0;
+      const keys = Object.keys(diceRolls);
+      let delay = 0;
 
-    keys.forEach(key => {
-      $(`#d${key}-counted`).empty();
-      diceRolls[key].forEach(value => {
-        setTimeout(() => {
-          generateDivs(`#d${key}-counted`, value);
-        }, delay);
-        delay += 750;
+      // iterates through each dice (4,6,8) and animates rolled dice value
+      keys.forEach(key => {
+        $(`#d${key}-counted`).empty();
+        diceRolls[key].forEach(value => {
+          setTimeout(() => {
+            generateDivs(`#d${key}-counted`, value);
+          }, delay);
+          // resets animation delay
+          delay += 750;
+        });
       });
-    });
+    }
   });
 
   btnMinus.on("click", () => {
-    $("#minus-button").addClass("shake");
+    // play audio
+    var audio = new Audio('/assets/sounds/click-sound.wav');
+    audio.play();
+    // animate button shake
+    $("#minus-button").attr("src", `/assets/buttonminus_pressed.png`);
+    // decrement quality
     if (diceCount[diceQueue[currentSelection]] > 0) {
+      toRoll--;
       $(`#d${diceQueue[currentSelection]}-counter`).addClass("shake")
       diceCount[diceQueue[currentSelection]]--;
       $(`#d${diceQueue[currentSelection]}-counter`).attr("src", `/assets/num${diceCount[diceQueue[currentSelection]]}.png`);
     };
     setTimeout(() => {
-      $("#minus-button").removeClass("shake");
+      $("#minus-button").attr("src", `/assets/buttonminus.png`);
       $(`#d${diceQueue[currentSelection]}-counter`).removeClass("shake");
     }, 100)
   });
 
   btnPlus.on("click", () => {
-    $("#plus-button").addClass("shake");
+    // play audio
+    var audio = new Audio('/assets/sounds/click-sound.wav');
+    audio.play();
+    // animate button shake 
+    $("#plus-button").attr("src", `/assets/buttonplus_pressed.png`);;
+    // increment quantity
     if (diceCount[diceQueue[currentSelection]] < 9) {
+      toRoll++;
       $(`#d${diceQueue[currentSelection]}-counter`).addClass("shake")
       diceCount[diceQueue[currentSelection]]++;
       $(`#d${diceQueue[currentSelection]}-counter`).attr("src", `/assets/num${diceCount[diceQueue[currentSelection]]}.png`);
     };
     setTimeout(() => {
-      $("#plus-button").removeClass("shake");
+      $("#plus-button").attr("src", `/assets/buttonplus.png`);
       $(`#d${diceQueue[currentSelection]}-counter`).removeClass("shake");
     }, 100)
   });
 
   btnLeftArrow.on("click", () => {
+    // play audio
+    var audio = new Audio('/assets/sounds/click-sound.wav');
+    audio.play();
     scrollLeft();
     $("#dice-name").attr("src", `/assets/name${diceQueue[currentSelection]}.png`)
     $("#dice-choice").attr("src", `/assets/d${diceQueue[currentSelection]}sprite.png`);
   })
 
   btnRightArrow.on("click", () => {
+    // play audio
+    var audio = new Audio('/assets/sounds/click-sound.wav');
+    audio.play();
     scrollRight();
     $("#dice-name").attr("src", `/assets/name${diceQueue[currentSelection]}.png`)
     $("#dice-choice").attr("src", `/assets/d${diceQueue[currentSelection]}sprite.png`);
@@ -164,6 +200,6 @@ document.addEventListener("DOMContentLoaded", () => {
     resetTemplates();
     $("#result-screen").hide();
     $("#input-screen").show();
-  })
+  });
 
 });
