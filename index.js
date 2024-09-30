@@ -7,7 +7,7 @@ const diceCount = {
   10: 0,
   12: 0,
   20: 0,
-}
+};
 
 const diceRolls = {
   4: [],
@@ -16,7 +16,7 @@ const diceRolls = {
   10: [],
   12: [],
   20: [],
-}
+};
 
 const diceSums = {
   4: 0,
@@ -25,7 +25,7 @@ const diceSums = {
   10: 0,
   12: 0,
   20: 0,
-}
+};
 
 var toRoll = 0;
 
@@ -34,15 +34,15 @@ var currentSelection = 5;
 function resetTemplates() {
   toRoll = 0;
 
-  for (x in diceCount) {
+  for (let x in diceCount) {
     diceCount[x] = 0;
   }
 
-  for (y in diceRolls) {
+  for (let y in diceRolls) {
     diceRolls[y] = [];
   }
 
-  for (z in diceSums) {
+  for (let z in diceSums) {
     diceSums[z] = 0;
   }
 
@@ -53,7 +53,23 @@ function resetTemplates() {
   $("#d12-counter").attr("src", `/assets/num0.png`);
   $("#d20-counter").attr("src", `/assets/num0.png`);
 
-}
+};
+
+function playSound(x) {
+  switch (x) {
+    case "click":
+      var audio = new Audio('/assets/sounds/click-sound.wav');
+      audio.play();
+      break;
+    case "single":
+      var audio = new Audio('/assets/sounds/single-roll.mp3');
+      audio.play();
+      break;
+    case "multi":
+      var audio = new Audio('/assets/sounds/multi-roll.wav');
+      audio.play();
+  }
+};
 
 function scrollLeft() {
   if (currentSelection === 0) {
@@ -61,7 +77,7 @@ function scrollLeft() {
   } else {
     currentSelection--;
   }
-}
+};
 
 function scrollRight() {
   if (currentSelection === 5) {
@@ -69,7 +85,40 @@ function scrollRight() {
   } else {
     currentSelection++;
   }
-}
+};
+
+function changeDie(x) {
+  $("#dice-name").attr("src", `/assets/name${x}.png`)
+  $("#dice-choice").attr("src", `/assets/d${x}sprite.png`)
+};
+
+function animateButton(x) {
+  playSound("click");
+  switch (x) {
+    case "plus":
+      $("#plus-button").attr("src", `/assets/buttonplus2_pressed.png`);
+      setTimeout(() => {
+        $("#plus-button").attr("src", `/assets/buttonplus2.png`);
+      }, 100);
+      break;
+
+    case "minus":
+      $("#minus-button").attr("src", `/assets/buttonminus2_pressed.png`);
+      setTimeout(() => {
+        $("#minus-button").attr("src", `/assets/buttonminus2.png`);
+      }, 100);
+      break;
+
+  }
+};
+
+function animateCount(x, y) {
+  $(`#d${y}-counter`).attr("src", `/assets/num${x}.png`);
+  $(`#d${y}-counter`).addClass("shake");
+  setTimeout(() => {
+    $(`#d${y}-counter`).removeClass("shake");
+  }, 100)
+};
 
 function rollDice(dice_val, num) {
   const arr = [];
@@ -78,17 +127,18 @@ function rollDice(dice_val, num) {
     arr.push(roll);
   }
   return arr;
-}
+};
 
 function generateDivs(r, x) {
-  const d = $(`<div><img src="/assets/val${x}.png" alt=""></div>`);
+  let c = 0;
+  const d = $(`<div id="generated-div${c}"><img src="/assets/val${x}.png" alt=""></div>`);
   $(r).append(d);
   d.addClass("counted");
   d.addClass("shake");
 
-}
+};
 
-document.addEventListener("DOMContentLoaded", () => {
+$(document).ready(() => {
 
   const btnLeftArrow = $("#left-arrow");
   const btnRightArrow = $("#right-arrow");
@@ -98,31 +148,38 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnX = $("#x-button");
   const btnRefresh = $("#refresh-button");
 
+
+  btnRoll.on("mouseenter", function () {
+    $(this).attr("src", "/assets/buttonroll1.gif");
+  }).on("mouseleave", function () {
+    $(this).attr("src", "/assets/buttonroll1static.png");
+  });
+  ;
+
   btnRoll.on("click", () => {
-    // checks to see if no dice present to roll
+    // confirms there are results to display 
     if (toRoll > 0) {
       if (toRoll === 1) {
-        // play audio
-        var audio = new Audio('/assets/sounds/single-roll.mp3');
-        audio.play();
+        playSound("single")
       } else {
-        // play audio
-        var audio = new Audio('/assets/sounds/multi-roll.wav');
-        audio.play()
+        playSound("multi")
       };
 
+      // rolls dice quantities and assigns vales to result object
       for (let key in diceCount) {
         if (diceCount[key] > 0) {
           diceRolls[key] = rollDice(parseInt(key), parseInt(diceCount[key]))
         }
       };
+
+      // updates screen
       $("#input-screen").hide();
       $("#result-screen").show();
 
-      const keys = Object.keys(diceRolls);
+      var keys = Object.keys(diceRolls);
       let delay = 0;
 
-      // iterates through each dice (4,6,8) and animates rolled dice value
+      // iterates through each dice (e.g. d4,d6,d8) and animates dice results
       keys.forEach(key => {
         $(`#d${key}-counted`).empty();
         diceRolls[key].forEach(value => {
@@ -137,59 +194,34 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   btnMinus.on("click", () => {
-    // play audio
-    var audio = new Audio('/assets/sounds/click-sound.wav');
-    audio.play();
-    // animate button shake
-    $("#minus-button").attr("src", `/assets/buttonminus_pressed.png`);
-    // decrement quality
+    animateButton("minus");
+
     if (diceCount[diceQueue[currentSelection]] > 0) {
       toRoll--;
-      $(`#d${diceQueue[currentSelection]}-counter`).addClass("shake")
       diceCount[diceQueue[currentSelection]]--;
-      $(`#d${diceQueue[currentSelection]}-counter`).attr("src", `/assets/num${diceCount[diceQueue[currentSelection]]}.png`);
-    };
-    setTimeout(() => {
-      $("#minus-button").attr("src", `/assets/buttonminus.png`);
-      $(`#d${diceQueue[currentSelection]}-counter`).removeClass("shake");
-    }, 100)
+      animateCount(diceCount[diceQueue[currentSelection]], diceQueue[currentSelection])
+    }
   });
 
   btnPlus.on("click", () => {
-    // play audio
-    var audio = new Audio('/assets/sounds/click-sound.wav');
-    audio.play();
-    // animate button shake 
-    $("#plus-button").attr("src", `/assets/buttonplus_pressed.png`);;
-    // increment quantity
+    animateButton("plus");
     if (diceCount[diceQueue[currentSelection]] < 9) {
       toRoll++;
-      $(`#d${diceQueue[currentSelection]}-counter`).addClass("shake")
       diceCount[diceQueue[currentSelection]]++;
-      $(`#d${diceQueue[currentSelection]}-counter`).attr("src", `/assets/num${diceCount[diceQueue[currentSelection]]}.png`);
-    };
-    setTimeout(() => {
-      $("#plus-button").attr("src", `/assets/buttonplus.png`);
-      $(`#d${diceQueue[currentSelection]}-counter`).removeClass("shake");
-    }, 100)
+      animateCount(diceCount[diceQueue[currentSelection]], diceQueue[currentSelection])
+    }
   });
 
   btnLeftArrow.on("click", () => {
-    // play audio
-    var audio = new Audio('/assets/sounds/click-sound.wav');
-    audio.play();
+    playSound("click");
     scrollLeft();
-    $("#dice-name").attr("src", `/assets/name${diceQueue[currentSelection]}.png`)
-    $("#dice-choice").attr("src", `/assets/d${diceQueue[currentSelection]}sprite.png`);
-  })
+    changeDie(diceQueue[currentSelection])
+  });
 
   btnRightArrow.on("click", () => {
-    // play audio
-    var audio = new Audio('/assets/sounds/click-sound.wav');
-    audio.play();
+    playSound("click");
     scrollRight();
-    $("#dice-name").attr("src", `/assets/name${diceQueue[currentSelection]}.png`)
-    $("#dice-choice").attr("src", `/assets/d${diceQueue[currentSelection]}sprite.png`);
+    changeDie(diceQueue[currentSelection]);
   });
 
   btnX.on("click", () => {
@@ -197,7 +229,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   btnRefresh.on("click", () => {
+
     resetTemplates();
+    // update screen
     $("#result-screen").hide();
     $("#input-screen").show();
   });
