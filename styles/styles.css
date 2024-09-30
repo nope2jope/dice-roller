@@ -6,23 +6,6 @@ html {
     max-height: 600px;
     background-color: #8f8e8e;
 }
-
-.d-single {
-    color: white;
-    font-weight: bold;
-    padding-left: 38px;
-    display: flex;
-    align-items: center;
-}
-
-.d-double {
-    color: white;
-    font-weight: bold;
-    padding-left: 30px;
-    display: flex;
-    align-items: center;
-}
-
 .container {
     width: 400px;
     max-width: 400px;
@@ -50,9 +33,19 @@ html {
     justify-content: space-between;
 }
 
-.counted {
-    display: inline-block;
-    margin-right: 10px;
+.hidden {
+    visibility: hidden;
+}
+
+.revealed {
+    visibility: visible;
+}
+
+/* INPUT SCREEN */
+
+.count-row {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .d-count {
@@ -62,24 +55,11 @@ html {
     height: 38px;
 }
 
-.d-counted {
-    display: flex;
-    flex-direction: row;
-    padding-left: 30px;
-    padding-top: 30px
-}
-
 .n-count {
     padding-left: 5px;
     padding-right: 5px;
     width: 52px;
     height: 38px;
-
-}
-
-.count-row {
-    margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 .selection-row {
@@ -92,62 +72,91 @@ html {
     margin-bottom: 25px;
 }
 
-.button-row {
-    margin-bottom: 20px;
+.options-row {
+    position: absolute;
+    bottom: 0;
 }
 
-.options-row {}
+
+/* RESULTS SCREEN */ 
+
+.counted {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.d-single {
+    padding-left: 29px;
+    display: flex;
+    align-items: center;
+}
+
+.d-double {
+    padding-left: 25px;
+    display: flex;
+    align-items: center;
+}
+
+.d-counted-sng {
+    display: flex;
+    flex-direction: row;
+    padding-left: 34px;
+    padding-top: 30px
+}
+
+.d-counted-dbl {
+    display: flex;
+    flex-direction: row;
+    padding-left: 30px;
+    padding-top: 30px
+}
+
+
+#left-arrow, #right-arrow, #minus-button, #plus-button, #roll-button, #q-button, #x-button, #refresh-button {
+    cursor: pointer;
+}
 
 #left-arrow {
     margin-right: 40px;
-    cursor: pointer;
-
-    cursor: pointer;
 }
 
 #right-arrow {
     margin-left: 40px;
-    cursor: pointer;
-
 }
 
 #minus-button {
     margin-right: 20px;
-    cursor: pointer;
-
 }
 
 #plus-button {
     margin-left: 20px;
-    cursor: pointer;
-
 }
 
 #roll-button {
-    cursor: pointer;
-
 }
 
 #q-button {
     margin-left: 10px;
     margin-bottom: 10px;
-    cursor: pointer;
-
 }
 
 #x-button {
     margin-right: 10px;
     margin-bottom: 10px;
-    cursor: pointer;
+}
 
+#refresh-button {
+    margin-right: 10px;
+    margin-bottom: 10px;
 }
 
 #input-screen {
-
+    position: relative;
 }
 
 #result-screen {
     display: none;
+    position: relative;
 }
 
 @font-face {
