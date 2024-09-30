@@ -14,7 +14,7 @@
 
 <body id="app-container">
     <div class="container" id="input-screen">
-        <!-- DICE VALUES -->
+        <!-- DICE TYPES -->
         <div class="count-row">
             <div class="center">
                 <div class="d-count center"><img src="/assets/count4.png" alt=""></div>
@@ -64,16 +64,16 @@
 
         <!-- DICE CHOICE -->
         <div class="center display-row">
-            <div><img id="minus-button" src="/assets/buttonminus.png" alt=""></div>
+            <div><img id="minus-button" src="/assets/buttonminus2.png" alt=""></div>
             <div><img id="dice-choice" src="/assets/d20sprite.png" alt=""></div>
-            <div ><img id="plus-button" src="/assets/buttonplus.png" alt=""></div>
+            <div><img id="plus-button" src="/assets/buttonplus2.png" alt=""></div>
         </div>
 
         <!-- ROLL BUTTON -->
-        <div class="center button-row">
-            <div id="roll-button">
-                <img src="/assets/buttonroll.png" alt="">
-            </div id="d-counter">
+        <div class="center">
+            <div>
+                <img id="roll-button" src="/assets/buttonroll1static.png" alt="">
+            </div>
         </div>
 
         <!-- OPTIONS -->
@@ -87,41 +87,51 @@
         </div>
 
     </div>
-    </div>
 
+
+    <!-- RESULT SCREEN -->
     <div class="container" id="result-screen">
-        <div id="counted-four"class="d-counted">
+        <div id="counted-four" class="d-counted-sng">
             <img src="/assets/count4.png" alt="">
             <div class="d-single" id="d4-counted">
             </div>
         </div>
-        <div id="counted-six"class="d-counted">
+        <div id="counted-six" class="d-counted-sng">
             <img src="/assets/count6.png" alt="">
             <div class="d-single" id="d6-counted">
             </div>
         </div>
-        <div id="counted-eight"class="d-counted">
+        <div id="counted-eight" class="d-counted-sng">
             <img src="/assets/count8.png" alt="">
             <div class="d-single" id="d8-counted">
             </div>
         </div>
-        <div id="counted-ten"class="d-counted">
+        <div id="counted-ten" class="d-counted-dbl">
             <img src="/assets/count10.png" alt="">
             <div class="d-double" id="d10-counted">
             </div>
         </div>
-        <div id="counted-twelve"class="d-counted">
+        <div id="counted-twelve" class="d-counted-dbl">
             <img src="/assets/count12.png" alt="">
             <div class="d-double" id="d12-counted">
             </div>
         </div>
-        <div id="counted-twenty"class="d-counted">
+        <div id="counted-twenty" class="d-counted-dbl">
             <img src="/assets/count20.png" alt="">
             <div class="d-double" id="d20-counted">
 
             </div>
         </div>
-        <div class="d-counted"><img id="refresh-button" src="/assets/buttonX.png" alt=""></div>
+
+        <!-- OPTIONS -->
+        <div class="space-between options-row">
+            <div id="q-button">
+                <img src="/assets/buttonQ.png" alt="">
+            </div>
+            <div id="refresh-button">
+                <img src="/assets/buttonrefresh.png" alt="">
+            </div>
+        </div>
     </div>
 
 
