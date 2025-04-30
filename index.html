@@ -1,141 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="index.js"></script>
-    <link rel="stylesheet" href="/styles/styles.css">
-
-</head>
-
-<body id="app-container">
-    <div class="container" id="input-screen">
-        <!-- DICE TYPES -->
-        <div class="count-row">
-            <div class="center">
-                <div class="d-count center"><img src="/assets/count4.png" alt=""></div>
-                <div class="d-count center"><img src="/assets/count6.png" alt=""></div>
-                <div class="d-count center"><img src="/assets/count8.png" alt=""></div>
-                <div class="d-count center"><img src="/assets/count10.png" alt=""></div>
-                <div class="d-count center"><img src="/assets/count12.png" alt=""></div>
-                <div class="d-count center"><img src="/assets/count20.png" alt=""></div>
-            </div>
-
-            <!-- DICE COUNT -->
-            <div class="center">
-                <div class="n-count center">
-                    <img id="d4-counter" src="/assets/num0.png" alt="">
-                </div>
-                <div class="n-count center">
-                    <img id="d6-counter" src="/assets/num0.png" alt="">
-                </div>
-                <div class="n-count center">
-                    <img id="d8-counter" src="/assets/num0.png" alt="">
-                </div>
-                <div class="n-count center">
-                    <img id="d10-counter" src="/assets/num0.png" alt="">
-                </div>
-                <div class="n-count center">
-                    <img id="d12-counter" src="/assets/num0.png" alt="">
-                </div>
-                <div class="n-count center">
-                    <img id="d20-counter" src="/assets/num0.png" alt="">
-                </div>
-            </div>
-        </div>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="theme-color" content="#000000" />
+    <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+    -->
 
 
-        <!-- DICE SELECTORS -->
-        <div class="center selection-row">
-            <div id="left-arrow">
-                <img src="/assets/buttonleftarrow.png" alt="">
-            </div>
-            <div>
-                <img id="dice-name" src="/assets/name20.png" alt="">
-            </div>
-            <div id="right-arrow">
-                <img src="/assets/buttonrightarrow.png" alt="">
-            </div>
-        </div>
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
 
-        <!-- DICE CHOICE -->
-        <div class="center display-row">
-            <div><img id="minus-button" src="/assets/buttonminus2.png" alt=""></div>
-            <div><img id="dice-choice" src="/assets/d20sprite.png" alt=""></div>
-            <div><img id="plus-button" src="/assets/buttonplus2.png" alt=""></div>
-        </div>
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+  </head>
 
-        <!-- ROLL BUTTON -->
-        <div class="center">
-            <div>
-                <img id="roll-button" src="/assets/buttonroll1static.png" alt="">
-            </div>
-        </div>
+  <body>
+    <noscript> You need to enable JavaScript to run this app. </noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
 
-        <!-- OPTIONS -->
-        <div class="space-between options-row">
-            <div id="q-button">
-                <img src="/assets/buttonQ.png" alt="">
-            </div>
-            <div id="x-button">
-                <img src="/assets/buttonX.png" alt="">
-            </div>
-        </div>
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
 
-    </div>
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
 
-
-    <!-- RESULT SCREEN -->
-    <div class="container" id="result-screen">
-        <div id="counted-four" class="d-counted-sng">
-            <img src="/assets/count4.png" alt="">
-            <div class="d-single" id="d4-counted">
-            </div>
-        </div>
-        <div id="counted-six" class="d-counted-sng">
-            <img src="/assets/count6.png" alt="">
-            <div class="d-single" id="d6-counted">
-            </div>
-        </div>
-        <div id="counted-eight" class="d-counted-sng">
-            <img src="/assets/count8.png" alt="">
-            <div class="d-single" id="d8-counted">
-            </div>
-        </div>
-        <div id="counted-ten" class="d-counted-dbl">
-            <img src="/assets/count10.png" alt="">
-            <div class="d-double" id="d10-counted">
-            </div>
-        </div>
-        <div id="counted-twelve" class="d-counted-dbl">
-            <img src="/assets/count12.png" alt="">
-            <div class="d-double" id="d12-counted">
-            </div>
-        </div>
-        <div id="counted-twenty" class="d-counted-dbl">
-            <img src="/assets/count20.png" alt="">
-            <div class="d-double" id="d20-counted">
-
-            </div>
-        </div>
-
-        <!-- OPTIONS -->
-        <div class="space-between options-row">
-            <div id="q-button">
-                <img src="/assets/buttonQ.png" alt="">
-            </div>
-            <div id="refresh-button">
-                <img src="/assets/buttonrefresh.png" alt="">
-            </div>
-        </div>
-    </div>
-
-
-
-</body>
-
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
